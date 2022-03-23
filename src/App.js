@@ -1,26 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { ApolloProvider } from '@apollo/client'
+import client from './apollo/client'
+import { AppStore} from './store/StoreProvider'
+import Home from './pages/Home'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      
-    </div>
-  );
+    return (
+        <ApolloProvider client={client}>
+            <AppStore>
+                <Home />
+            </AppStore>
+        </ApolloProvider>
+    )
 }
 
-export default App;
+export default App
