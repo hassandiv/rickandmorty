@@ -34,7 +34,7 @@ article.card {
     color: rgb(255, 152, 0);
     text-decoration: none;
 }
-.cardContent span.status {
+.cardContent span.details {
     font-size: 16px;
     font-weight: 500;
     display: flex;

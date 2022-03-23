@@ -11,9 +11,9 @@ const Card = ({ character, location }) => {
             <div className={styles.cardContent}>
                 <div>
                     <h2><a href="#">{character?.name}</a></h2>
-                    <span className={styles.status}>
+                    <span className={styles.details}>
                         <span className={checkStatus}></span>
-                        {character?.status} - {character?.species}
+                        {character?.status} - {character?.species} - {character?.gender}
                     </span>
                 </div>
                 <div className={styles.cardSection}>

@@ -8,11 +8,9 @@ import CharactersResults from '../components/CharactersResults'
 
 const Home = () => {
 
-    const { query } = useContext(AppContext)
     const { data, error } = useQuery(GET_FILTERED_DATA)
-
     const [ filteredData, setFilteredData ] = useState({})
-    const [ getFilteredData, { loading } ] = useLazyQuery(GET_FILTERED_DATA, {
+    const [ filterQuery, { loading } ] = useLazyQuery(GET_FILTERED_DATA, {
         notifyOnNetworkStatusChange: true,
         onCompleted: (data) => {
             setFilteredData(data ?? {})
@@ -20,25 +18,13 @@ const Home = () => {
         },
     })
 
-    useEffect(() => {
-        getFilteredData({
-            variables: { // variables comes from our schema generally speaking in this case here GET_FILTERED_DATA_WITH_TOTAL_PAGES
-                name: query,
-                // after: null,
-                // cityORareaORcompound: city && area && compound ? compound : city && area ? area : city && city,
-                // typeORrooms: type && rooms ? rooms : type && type
-            }
-        })
-    }, [])
-
-    console.log('filteredData', filteredData)
-
 
     return (
         <React.Fragment>
-            <Filter />
+            <Filter 
+                filterQuery={filterQuery}
+            />
             <CharactersResults
-                query={query}
                 data={data?.characters?.results ?? []}
                 filteredData={filteredData.characters?.results ?? []}
             />
