@@ -1,5 +1,6 @@
 import React from "react"
-import styles from '../styles/Card.module.css'
+import { Link } from 'react-router-dom'
+import styles from '../../styles/Card.module.css'
 
 const Card = ({ character, location }) => {
 
@@ -10,7 +11,14 @@ const Card = ({ character, location }) => {
             <img src={character?.image} alt={character?.name} />
             <div className={styles.cardContent}>
                 <div>
-                    <h2><a href="#">{character?.name}</a></h2>
+                    <h2>
+                        <Link
+                            to={`/character/${character?.id}`}
+                            state={{character: character}}
+                        >
+                            {character?.name}
+                        </Link>
+                    </h2>
                     <span className={styles.details}>
                         <span className={checkStatus}></span>
                         {character?.status} - {character?.species} - {character?.gender}

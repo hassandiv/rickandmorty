@@ -1,34 +1,49 @@
-import React, {useEffect, useState, useContext} from 'react'
-import { AppContext } from '../store/StoreProvider'
-import { useQuery, useLazyQuery } from '@apollo/client'
-import { GET_DATA } from '../gqlSchemas/queries/home/getData'
+import React, { useState } from 'react'
+import { useLazyQuery } from '@apollo/client'
 import { GET_FILTERED_DATA } from '../gqlSchemas/queries/filter/getFilteredData'
 import Filter from '../components/Filter'
-import CharactersResults from '../components/CharactersResults'
+import LoadCharacters from '../components/characters/LoadCharacters'
+import ResultInfo from '../components/ResultInfo'
+import styles from '../styles/Home.module.css'
 
 const Home = () => {
 
-    const { data, error } = useQuery(GET_FILTERED_DATA)
-    const [ filteredData, setFilteredData ] = useState({})
-    const [ filterQuery, { loading } ] = useLazyQuery(GET_FILTERED_DATA, {
+    const [ characters, setCharacters ] = useState({})
+    //const [ showResultInfo, setShowResultInfo ] = useState(false)
+    const [ filterQuery, { loading, error } ] = useLazyQuery(GET_FILTERED_DATA, {
         notifyOnNetworkStatusChange: true,
         onCompleted: (data) => {
-            setFilteredData(data ?? {})
-            // setShowResultInfo(true)
-        },
+            setCharacters(data?.characters ?? {})
+           // setShowResultInfo(true)
+        }
     })
 
-
     return (
-        <React.Fragment>
-            <Filter 
+        <div className={styles.container}>
+            <Filter
                 filterQuery={filterQuery}
             />
-            <CharactersResults
-                data={data?.characters?.results ?? []}
-                filteredData={filteredData.characters?.results ?? []}
-            />
-        </React.Fragment>
+            <div className={styles.contentWrapper}>
+                {   error ? 
+                        <p className={styles.error}>Internal Server Error! {error?.message}</p> 
+                    :
+                    <React.Fragment>
+                        {    loading ? 
+                            <p className={styles.loading}>Loading...</p>
+                        :
+                            <React.Fragment>
+                                <ResultInfo
+                                    totalResultCount={characters?.info?.count ?? ""}
+                                />
+                                <LoadCharacters
+                                    characters={characters ?? {}}
+                                />
+                            </React.Fragment>
+                        }
+                    </React.Fragment>
+                }
+            </div>
+        </div>
     )
 }
 export default Home

@@ -1,0 +1,119 @@
+.characterView {
+    width: 100%;
+    min-height: 100vh;
+    background: rgb(36, 40, 47);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px 50px 10px;
+  }
+  .characterViewWidth {
+    position: relative;
+    width: 800px;
+    max-width: 100%;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 auto;
+    padding-bottom: 70px;
+    animation: animation 0.5s ease-in-out;
+    margin-bottom: 20px;
+  }
+  @keyframes animation {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .characterViewWidth:after {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    background: #fff;
+    height: 5px;
+    width: 300px;
+    border-radius: 4px;
+  }
+  .name {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 56px;
+    color: rgb(245, 245, 245);
+    margin: 0px;
+    text-align: center;
+  }
+  .name span {
+    color: rgb(245, 245, 245);
+    background: #705ee0;
+    border-radius: 4px;
+    padding: 0px 5px;
+  }
+  /* .name small {
+    font-size: 13px;
+    position: absolute;
+    top: 15px;
+    right: 125px;
+    color: rgb(245, 245, 245);
+    height: 30px;
+    width: 56px;
+    display: flex;
+    align-items: center;
+  } */
+.detailsWrapper {
+    display: flex;
+    flex-direction: row;
+}
+.characterDetails {
+    font-size: 16px;
+    line-height: 24px;
+    color: rgb(245, 245, 245);
+    margin-bottom: 0px;
+    padding-right: 30px;
+}
+  /* .category {
+    margin-bottom: 50px;
+  }
+  .category b {
+    padding-right: 5px;
+  } */
+.avatar img {
+    background: #c3baff;
+    border-radius: 100%;
+    padding: 10px;
+    width: 400px;
+    max-width: 100%;
+    height: auto;
+}
+.characterView button {
+    font-size: 20px;
+    font-weight: 300;
+    color: rgb(245, 245, 245);
+    background: transparent;
+    border: 0px;
+    transition: 0.5s all;
+}
+.characterView button:hover {
+    color: #705ee0;
+}
+
+@media(max-width: 650px) {
+    .name {
+        font-size: 26px;
+        line-height: inherit;
+    }
+    .detailsWrapper {
+        flex-direction: column;
+    }
+    .characterDetails {
+        padding-right: 0px;
+    }
+    .avatar img {
+        width: 300px;
+    }
+}

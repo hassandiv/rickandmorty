@@ -5,6 +5,8 @@
     position: fixed;
     z-index: 9;
     /* transition: 0.5s all; */
+    /* position: absolute;
+    top: 0%; */
 }
 .heightClosed {
     min-height: 120px;

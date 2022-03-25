@@ -5,15 +5,14 @@ import styles from '../styles/Form.module.css'
 
 const Filter = ({ filterQuery }) => {
 
-    const { query, setQuery, status, setStatus, gender, setGender, setIsSubmitted } = useContext(AppContext)
-
+    const { query, setQuery, status, setStatus, gender, setGender } = useContext(AppContext)
     const [isOpen, setIsOpen] = useState(false)
 
     const handleChange = e => {
         setQuery(e.target.value)
     }
 
-    const handleSelectedStatus = e => {
+    const handleSelectedStatus = e => { //could combine into one with handleSelectedGender
         setStatus(e.target.value)
     }
 
@@ -34,15 +33,18 @@ const Filter = ({ filterQuery }) => {
                 gender: genderToLowerCase
             }
         })
-        setIsSubmitted(true)
         setIsOpen(false)
     }
 
     useEffect(() => {
-        if (query === '') {
-            setIsSubmitted(false)
-        }
-    }, [query])
+        filterQuery({
+            variables: {
+                name: '',
+                status: '',
+                gender: ''
+            }
+        })
+    }, [])
 
     const statusTypes = ["All", "Live", "Dead", "Unknown"]
     const genderTypes = ["All", "Female", "Male", "Genderless", "Unknown"]
@@ -65,7 +67,7 @@ const Filter = ({ filterQuery }) => {
                     />
                     <div className={styles.advancedFilter}>
                         <Button 
-                            variant="primary" 
+                            variant="primary"
                             className={styles.advancedFilterBtn}
                             onClick={() => setIsOpen(!isOpen)}
                         >
@@ -101,7 +103,7 @@ const Filter = ({ filterQuery }) => {
                         </div>
                     </div>
                     <Button 
-                        variant="primary" 
+                        variant="primary"
                         type="submit"
                         value="Search"
                     >

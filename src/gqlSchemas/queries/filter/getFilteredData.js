@@ -1,10 +1,11 @@
 import { gql } from '@apollo/client'
 
 export const GET_FILTERED_DATA = gql`
-    query GET_FILTERED_DATA( $name: String, $status: String, $gender: String ) { 
-        characters: characters(filter: { name: $name, status: $status, gender: $gender }) {
+    query GET_FILTERED_DATA( $page: Int, $name: String, $status: String, $gender: String ) { 
+        characters: characters(page: $page, filter: { name: $name, status: $status, gender: $gender }) {
             info {
                 count
+                pages
             }
             results {
                 id
