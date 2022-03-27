@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import { AppContext } from '../../store/StoreProvider'
-import { GET_FILTERED_DATA } from '../../gqlSchemas/queries/filter/getFilteredData'
+import { GET_CHARACTERS } from '../../gqlSchemas/queries/characters/getCharacters'
 import CharactersResults from './CharactersResults'
-import styles from '../../styles/LoadMore.module.css'
+import Loader from '../Loader'
 import { Button } from 'react-bootstrap'
+import styles from '../../styles/LoadMore.module.css'
 
 const LoadCharacters = ({ characters }) => {
 
-    const { query, status, gender, setCharactersView, characterId } = useContext(AppContext)
+    const { query, status, gender } = useContext(AppContext)
 
-    const queryToLowerCase = query?.toLowerCase()
-    const statusToLowerCase = status?.toLowerCase()
-    const genderToLowerCase = gender?.toLowerCase()
-
-    console.log('query' , query)
-    console.log('status' , status)
-    console.log('gender' , gender)
+    let queryLowerCase = query.toLowerCase()
+    let statusLowerCase = status.toLowerCase()
+    let genderLowerCase = gender.toLowerCase()
 
     const [charactersResults, setCharactersResults] = useState(characters?.results ?? [])
     const [pageInfo, setPageInfo] = useState(characters?.info ?? {})
@@ -27,7 +24,6 @@ const LoadCharacters = ({ characters }) => {
         setPageInfo(characters?.info)
     },  [characters?.results])
 
-    console.log('page', page)
 
     const setNewCharacters = (characters) => { //characters comes from line 49 setNewCharacters(data?.characters ?? {})
         if (!characters || !characters?.results) {
@@ -45,7 +41,7 @@ const LoadCharacters = ({ characters }) => {
         setCharactersResults(newCharachters)
     }
 
-    const [ filterQuery, { loading } ] = useLazyQuery(GET_FILTERED_DATA, {
+    const [ filterQuery, { loading } ] = useLazyQuery(GET_CHARACTERS, {
         notifyOnNetworkStatusChange: true,
         onCompleted: (data) => { //promise function will be called when request above is made
         /**
@@ -61,30 +57,14 @@ const LoadCharacters = ({ characters }) => {
         //if(page >= 1) {
             filterQuery({ //same data below + page goes into load more component or next and prev to keep the same filter results. page var doesnt stay here
                 variables: {
-                    name: queryToLowerCase,
-                    status: statusToLowerCase,
-                    gender: genderToLowerCase,
+                    name: queryLowerCase,
+                    status: statusLowerCase,
+                    gender: genderLowerCase,
                     page: page + 1 //by default page 1 is loaded by the api, so we setPage init state to 1, then load more page + 1 = 2 ...etc
                 }
             })
         //}
     }
-
-    useEffect(() => {
-        //get characters for characterView page
-        setCharactersView(charactersResults)
-    }, [characters?.results, charactersResults, characterId])
-
-
-    console.log('characterId', characterId)
-    console.log('charactersResults', charactersResults)
-
-
-    // useEffect(() => { i ++ to load to previous charachter view
-    //     if(page) {
-    //     loadMoreCharacters()
-    //     }
-    // }, [page])
 
     const { pages } = pageInfo || {}
 
@@ -94,23 +74,19 @@ const LoadCharacters = ({ characters }) => {
                 charactersResults={charactersResults}
             />
             <div className={styles.loadMore}>
-                {   page !== pages &&
-                        <React.Fragment>
-                            { loading ? 
-                                <p>
-                                    Loading...
-                                </p>
-                            : charactersResults?.length &&
+                {   page !== pages && //only show loadmore button if current page not equal to total pages
+                    <React.Fragment>
+                        {   loading ? 
+                                <Loader />
+                        :   charactersResults?.length && //only show loadmore button if reults length > 0, if no results found hide button.
                                 <Button
                                     variant="light"
                                     onClick={() => loadMoreCharacters()}
                                 >
                                     Load More
                                 </Button>
-                            }
-                        </React.Fragment>
-                    // :
-                    // <p>No more characters found.</p>
+                        }
+                    </React.Fragment>
                 }
             </div>
         </React.Fragment>

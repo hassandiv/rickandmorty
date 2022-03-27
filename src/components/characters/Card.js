@@ -8,8 +8,10 @@ const Card = ({ character }) => {
 
     const checkStatus = character?.status === "Alive" ? styles.greenIcon : character?.status === "Dead" ? styles.redIcon : character?.status === "unknown" && styles.greyIcon
 
+    // console.log('character', character)
+
     return (
-        <article className={styles.card}>
+        <article className={styles.card} id={character?.id}>
             <img src={character?.image} alt={character?.name} />
             <div className={styles.cardContent}>
                 <div className={styles.cardHeader}>
@@ -26,10 +28,10 @@ const Card = ({ character }) => {
                     </span>
                 </div>
                 <CharacterLocation
-                    characterId={character?.id}
+                    location={character?.location}
                 />
                 <CharacterEpisodes
-                    characterId={character?.id}
+                    episodes={character?.episode}
                 />
             </div>
         </article>

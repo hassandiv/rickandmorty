@@ -4,15 +4,6 @@
     background: rgb(18, 18, 24);
     position: fixed;
     z-index: 9;
-    /* transition: 0.5s all; */
-    /* position: absolute;
-    top: 0%; */
-}
-.heightClosed {
-    min-height: 120px;
-}
-.heightOpen {
-    min-height: 300px;
 }
 .form {
     width: 1248px;
@@ -21,6 +12,7 @@
     margin: 0 auto;
     padding: 20px 10px;
     color: rgb(245, 245, 245);
+    transition: 0.2s ease-in;
 }
 .formGroup {
     display: flex;
@@ -45,13 +37,10 @@
     justify-content: space-between;
     background: rgb(36, 40, 47);
     padding: 10px 15px;
-    margin: 10px 0px;
+    margin-top: 10px;
     border-radius: 0.5rem;
     box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px, rgb(0 0 0 / 6%) 0px 2px 4px -1px;
     z-index: 99;
-}
-.dropDown input {
-    cursor: pointer;
 }
 @media(max-width: 750px) {
     .formContainer {
@@ -66,14 +55,22 @@
     .advancedFilterBtn {
         width: 100%;
     }
-    .heightClosed {
-        min-height: 165px;
+    .heightClosedMobile .form {
+        min-height: 130px;
     }
-    .heightOpen {
-        min-height: 350px;
+    .heightOpenMobile .form{
+        min-height: 320px;
     }
     .dropDown {
         width: 100%;
         justify-content: space-around;
+        animation: animation 0.6s ease-in-out;
+    }
+    @keyframes animation {
+        0%    {opacity: 0}
+        100%  {opacity: 1}
+    }
+    .advancedFilterBtn {
+        margin-right: 0px;
     }
 }

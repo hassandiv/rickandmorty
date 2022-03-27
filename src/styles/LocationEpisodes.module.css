@@ -16,6 +16,8 @@
     font-weight: 500;
     color: rgb(158, 158, 158);
 }
-/* .locationEpisodes p {
-    color: rgb(245, 245, 245);
-} */
+@media(max-width: 550px) {
+    .locationEpisodes:last-child {
+        margin-bottom: 0px;
+    }
+}

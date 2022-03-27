@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { AppContext } from '../store/StoreProvider'
 import { Form, Button } from 'react-bootstrap'
 import styles from '../styles/Form.module.css'
@@ -8,11 +8,25 @@ const Filter = ({ filterQuery }) => {
     const { query, setQuery, status, setStatus, gender, setGender } = useContext(AppContext)
     const [isOpen, setIsOpen] = useState(false)
 
+    let queryLowerCase = query.toLowerCase()
+    let statusLowerCase = status.toLowerCase()
+    let genderLowerCase = gender.toLowerCase()
+
+    useEffect(() => {
+        filterQuery({
+            variables: {
+                name: queryLowerCase,
+                status: statusLowerCase,
+                gender: genderLowerCase
+            }
+        })
+    }, [])
+
     const handleChange = e => {
         setQuery(e.target.value)
     }
 
-    const handleSelectedStatus = e => { //could combine into one with handleSelectedGender
+    const handleSelectedStatus = e => {
         setStatus(e.target.value)
     }
 
@@ -20,44 +34,27 @@ const Filter = ({ filterQuery }) => {
         setGender(e.target.value)
     }
 
-    const queryToLowerCase = query?.toLowerCase()
-    const statusToLowerCase = status?.toLowerCase()
-    const genderToLowerCase = gender?.toLowerCase()
-
     const handleFormSubmit = e => {
         e.preventDefault()
         filterQuery({
             variables: {
-                name: queryToLowerCase,
-                status: statusToLowerCase,
-                gender: genderToLowerCase
+                name: queryLowerCase,
+                status: statusLowerCase,
+                gender: genderLowerCase
             }
         })
         setIsOpen(false)
     }
 
-    //two scenarios 1 - Once the app is loaded will call the effect with empty strings to fetch all data. 
-    //2 - If filtered the data and go to character view page then go back to home it will load the previous results
-    useEffect(() => {
-        filterQuery({
-            variables: {
-                name: queryToLowerCase || "",
-                status: statusToLowerCase || "",
-                gender: genderToLowerCase || ""
-            }
-        })
-    }, [])
-
     const statusTypes = ["All", "Live", "Dead", "Unknown"]
     const genderTypes = ["All", "Female", "Male", "Genderless", "Unknown"]
 
     return (
-        <div className={styles.formContainer + ` ` + `${ isOpen ? styles.heightOpen : styles.heightClosed }`}>
+        <div className={styles.formContainer + ` ` + `${ isOpen ? styles.heightOpenMobile : styles.heightClosedMobile }`}>
             <Form
                 onSubmit={handleFormSubmit}
                 className={styles.form}
             >
-                <Form.Label>FILTER BY</Form.Label>
                 <Form.Group className={styles.formGroup} controlId="exampleForm.ControlInput1">
                     <Form.Control 
                         type="text"

@@ -1,0 +1,22 @@
+.container {
+    width: 1248px;
+    max-width: 100%;
+    display: flex;
+    margin: 0 auto;
+    padding: 0px 10px;
+}
+.link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.link a {
+    color: rgb(245, 245, 245);
+    text-decoration: none;
+    margin-right: 10px;
+    transition: 0.2s ease-in;
+}
+
+.link a:hover {
+    color: rgb(255, 152, 0);
+}
