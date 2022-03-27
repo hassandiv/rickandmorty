@@ -7,6 +7,8 @@ export const AppStore = ({ children }) => {
     const [ query, setQuery ] = useState('')
     const [ status, setStatus ] = useState('')
     const [ gender, setGender ] = useState('')
+    const [ charactersView, setCharactersView ] = useState([])
+    const [ charachterId, setCharacterId ] = useState(null) 
 
     return (
         <AppContext.Provider
@@ -16,7 +18,11 @@ export const AppStore = ({ children }) => {
                 status,
                 setStatus,
                 gender, 
-                setGender
+                setGender,
+                charactersView,
+                setCharactersView,
+                charachterId,
+                setCharacterId
             }}
         >
             {children}

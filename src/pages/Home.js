@@ -9,12 +9,12 @@ import styles from '../styles/Home.module.css'
 const Home = () => {
 
     const [ characters, setCharacters ] = useState({})
-    //const [ showResultInfo, setShowResultInfo ] = useState(false)
+    const [ showResultInfo, setShowResultInfo ] = useState(false)
     const [ filterQuery, { loading, error } ] = useLazyQuery(GET_FILTERED_DATA, {
         notifyOnNetworkStatusChange: true,
         onCompleted: (data) => {
             setCharacters(data?.characters ?? {})
-           // setShowResultInfo(true)
+            setShowResultInfo(true)
         }
     })
 
@@ -24,16 +24,17 @@ const Home = () => {
                 filterQuery={filterQuery}
             />
             <div className={styles.contentWrapper}>
-                {   error ? 
-                        <p className={styles.error}>Internal Server Error! {error?.message}</p> 
+                {   loading ?
+                        <p className="text-white text-center mb-0">Loading...</p>
                     :
                     <React.Fragment>
-                        {    loading ? 
-                            <p className={styles.loading}>Loading...</p>
-                        :
+                        {   error ? 
+                                <p className="text-white text-center mb-0">Internal Server Error! {error?.message}</p> 
+                            :
                             <React.Fragment>
                                 <ResultInfo
-                                    totalResultCount={characters?.info?.count ?? ""}
+                                    totalResultCount={characters?.info?.count}
+                                    showResultInfo={showResultInfo}
                                 />
                                 <LoadCharacters
                                     characters={characters ?? {}}

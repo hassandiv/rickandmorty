@@ -1,0 +1,21 @@
+.locationEpisodes {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.locationEpisodes a {
+    color: rgb(245, 245, 245);
+    text-decoration: none;
+}
+.locationEpisodes a:hover {
+    color: rgb(255, 152, 0);
+    text-decoration: none;
+}
+.locationEpisodes span {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(158, 158, 158);
+}
+/* .locationEpisodes p {
+    color: rgb(245, 245, 245);
+} */

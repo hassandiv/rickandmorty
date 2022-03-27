@@ -36,12 +36,14 @@ const Filter = ({ filterQuery }) => {
         setIsOpen(false)
     }
 
+    //two scenarios 1 - Once the app is loaded will call the effect with empty strings to fetch all data. 
+    //2 - If filtered the data and go to character view page then go back to home it will load the previous results
     useEffect(() => {
         filterQuery({
             variables: {
-                name: '',
-                status: '',
-                gender: ''
+                name: queryToLowerCase || "",
+                status: statusToLowerCase || "",
+                gender: genderToLowerCase || ""
             }
         })
     }, [])

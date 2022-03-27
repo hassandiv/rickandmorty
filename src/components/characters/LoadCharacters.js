@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap'
 
 const LoadCharacters = ({ characters }) => {
 
-    const { query, status, gender } = useContext(AppContext)
+    const { query, status, gender, setCharactersView, characterId } = useContext(AppContext)
 
     const queryToLowerCase = query?.toLowerCase()
     const statusToLowerCase = status?.toLowerCase()
@@ -26,6 +26,8 @@ const LoadCharacters = ({ characters }) => {
         setCharactersResults(characters?.results) 
         setPageInfo(characters?.info)
     },  [characters?.results])
+
+    console.log('page', page)
 
     const setNewCharacters = (characters) => { //characters comes from line 49 setNewCharacters(data?.characters ?? {})
         if (!characters || !characters?.results) {
@@ -56,22 +58,39 @@ const LoadCharacters = ({ characters }) => {
 
     const loadMoreCharacters = () => {
         setPage(page + 1)
-        filterQuery({ //same data below + page goes into load more component or next and prev to keep the same filter results. page var doesnt stay here
-            variables: {
-                name: queryToLowerCase,
-                status: statusToLowerCase,
-                gender: genderToLowerCase,
-                page: page + 1//by default page 1 is loaded by the api, so we setPage init state to 1, then load more page + 1 = 2 ...etc
-            }
-        })
+        //if(page >= 1) {
+            filterQuery({ //same data below + page goes into load more component or next and prev to keep the same filter results. page var doesnt stay here
+                variables: {
+                    name: queryToLowerCase,
+                    status: statusToLowerCase,
+                    gender: genderToLowerCase,
+                    page: page + 1 //by default page 1 is loaded by the api, so we setPage init state to 1, then load more page + 1 = 2 ...etc
+                }
+            })
+        //}
     }
+
+    useEffect(() => {
+        //get characters for characterView page
+        setCharactersView(charactersResults)
+    }, [characters?.results, charactersResults, characterId])
+
+
+    console.log('characterId', characterId)
+    console.log('charactersResults', charactersResults)
+
+
+    // useEffect(() => { i ++ to load to previous charachter view
+    //     if(page) {
+    //     loadMoreCharacters()
+    //     }
+    // }, [page])
 
     const { pages } = pageInfo || {}
 
     return (
         <React.Fragment>
             <CharactersResults
-                //characters={data?.characters?.results ?? []}
                 charactersResults={charactersResults}
             />
             <div className={styles.loadMore}>

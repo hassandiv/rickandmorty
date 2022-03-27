@@ -11,7 +11,6 @@ const CharactersResults = ({ charactersResults }) => {
                         <Card
                             key={character?.id}
                             character={character}
-                            location={charactersResults?.location}
                         />
                     )
                 }
