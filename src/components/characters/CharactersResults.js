@@ -17,10 +17,11 @@ const CharactersResults = ({ charactersResults }) => {
 
     /*
     * add checked false to characters array
-    * reload component with favourite characters
+    * on reloading the component with favourite depend array, update our checked characters to be true - character.checked = true
     */
     useEffect(() => {
-		charactersResults?.forEach(character => { character.checked = false }) 
+		charactersResults?.forEach(character => { character.checked = false })
+		//below just after browser refreshed
 		charactersResults?.filter(character => { 
 			if (favourite?.find(favCharacter => favCharacter?.id === character?.id)) {
 				refreshData()
