@@ -1,8 +1,13 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from '@apollo/client'
+import DebounceLink from 'apollo-link-debounce'
 
-const link = createHttpLink({
-   uri: `https://rickandmortyapi.com/graphql`
-})
+/* default debounce for all requests "mutation or query" - unless changed individually within every request  */
+const DEFAULT_DEBOUNCE_TIMEOUT = 1000
+
+const link = ApolloLink.from([
+    new DebounceLink(DEFAULT_DEBOUNCE_TIMEOUT),
+    new HttpLink({ uri: `https://rickandmortyapi.com/graphql` })
+])
 
 const cache = new InMemoryCache({
     resultCaching: false,

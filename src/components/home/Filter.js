@@ -3,13 +3,13 @@ import { AppContext } from '../../store/StoreProvider'
 import { Form, Button } from 'react-bootstrap'
 import styles from '../../styles/Form.module.css'
 
-const Filter = ({ filterQuery }) => {
+const Filter = () => {
 
-    const { query, setQuery, status, setStatus, gender, setGender } = useContext(AppContext)
+    const { name, setName, status, setStatus, gender, setGender } = useContext(AppContext)
     const [isOpen, setIsOpen] = useState(false)
 
     const handleChange = e => {
-        setQuery(e.target.value)
+        setName(e.target.value)
     }
 
     const handleSelectedStatus = e => {
@@ -20,39 +20,19 @@ const Filter = ({ filterQuery }) => {
         setGender(e.target.value)
     }
 
-    let queryLowerCase = query.toLowerCase()
-    let statusLowerCase = status.toLowerCase()
-    let genderLowerCase = gender.toLowerCase()
-
-    /* Submit request with filter queries */
-    const handleFormSubmit = e => {
-        e.preventDefault()
-        filterQuery({
-            variables: {
-                name: queryLowerCase,
-                status: statusLowerCase,
-                gender: genderLowerCase
-            }
-        })
-        setIsOpen(false)
-    }
-
     const statusTypes = ["All", "Live", "Dead", "Unknown"]
     const genderTypes = ["All", "Female", "Male", "Genderless", "Unknown"]
 
     return (
         <div className={styles.formContainer + ` ` + `${ isOpen ? styles.heightOpenMobile : styles.heightClosedMobile }`}>
-            <Form
-                onSubmit={handleFormSubmit}
-                className={styles.form}
-            >
+            <Form className={styles.form}>
                 <Form.Group className={styles.formGroup} controlId="exampleForm.ControlInput1">
                     <Form.Control 
                         type="text"
                         name="search"
                         placeholder="Search ..."
                         className={styles.searchInput}
-                        value={query}
+                        value={name}
                         onChange={handleChange}
                     />
                     <div className={styles.advancedFilter}>
@@ -92,13 +72,6 @@ const Filter = ({ filterQuery }) => {
                             </div>
                         </div>
                     </div>
-                    <Button 
-                        variant="primary"
-                        type="submit"
-                        value="Search"
-                    >
-                        Search
-                    </Button>
                 </Form.Group>
             </Form>
         </div>

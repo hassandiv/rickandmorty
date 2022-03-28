@@ -11,7 +11,6 @@ import CharacterView from './pages/CharacterView'
 import NotFound from './pages/404'
 import Footer from './components/Footer'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
 
 function App() {
 

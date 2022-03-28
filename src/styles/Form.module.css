@@ -20,6 +20,7 @@
     align-items: flex-start;
     position: relative;
 }
+
 .searchInput {
     margin-right: 10px;
 }
@@ -71,6 +72,9 @@
         100%  {opacity: 1}
     }
     .advancedFilterBtn {
+        margin-right: 0px;
+    }
+    .searchInput {
         margin-right: 0px;
     }
 }

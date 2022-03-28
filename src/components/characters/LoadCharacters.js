@@ -9,12 +9,7 @@ import styles from '../../styles/LoadMore.module.css'
 
 const LoadCharacters = ({ characters }) => {
 
-    const { query, status, gender } = useContext(AppContext)
-
-    /* query to lowercase */
-    let queryLowerCase = query.toLowerCase()
-    let statusLowerCase = status.toLowerCase()
-    let genderLowerCase = gender.toLowerCase()
+    const { name, status, gender } = useContext(AppContext)
 
     const [charactersResults, setCharactersResults] = useState(characters?.results ?? [])
     const [pageInfo, setPageInfo] = useState(characters?.info ?? {})
@@ -40,7 +35,7 @@ const LoadCharacters = ({ characters }) => {
         setCharactersResults(newCharachters)
     }
 
-    /* Getting the next page/set of characters and passing it to setNewCharacters() for concating */
+    /* Getting the next page/set of characters and passing it to setNewCharacters() using LazyQuery manual loading on click loadmore */
     const [ filterQuery, { loading } ] = useLazyQuery(GET_CHARACTERS, {
         notifyOnNetworkStatusChange: true,
         onCompleted: (data) => {
@@ -53,9 +48,9 @@ const LoadCharacters = ({ characters }) => {
         setPage(page + 1)
         filterQuery({ 
             variables: {
-                name: queryLowerCase,
-                status: statusLowerCase,
-                gender: genderLowerCase,
+                name: name.toLowerCase(),
+                status: status.toLowerCase(),
+                gender: gender.toLowerCase(),
                 page: page + 1
             }
         })
@@ -74,7 +69,7 @@ const LoadCharacters = ({ characters }) => {
                     <React.Fragment>
                         { loading ? 
                             <Loader />
-                            :  
+                            : 
                             <Button
                                 variant="light"
                                 onClick={() => loadMoreCharacters()}

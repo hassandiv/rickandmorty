@@ -4,8 +4,8 @@ export const AppContext = createContext()
 
 export const AppStore = ({ children }) => {
 
-    /* Filter queries for the characters schema */
-    const [ query, setQuery ] = useState('')
+    /* Filter queries */
+    const [ name, setName ] = useState('')
     const [ status, setStatus ] = useState('')
     const [ gender, setGender ] = useState('')
 
@@ -16,8 +16,8 @@ export const AppStore = ({ children }) => {
     return (
         <AppContext.Provider
             value={{
-                query,
-                setQuery,
+                name,
+                setName,
                 status,
                 setStatus,
                 gender, 

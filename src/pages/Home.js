@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { AppContext } from '../store/StoreProvider'
-import { useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { GET_CHARACTERS } from '../gqlSchemas/queries/characters/getCharacters'
 import Filter from '../components/home/Filter'
 import Loader from '../components/Loader'
@@ -11,34 +11,26 @@ import styles from '../styles/Home.module.css'
 
 const Home = () => {
 
-    const { query, status, gender } = useContext(AppContext)
-    const [ characters, setCharacters ] = useState({})
-    const [ showResultInfo, setShowResultInfo ] = useState(false)
+    /* Search filter by name AND OR status AND OR gender */
+    const { name, status, gender } = useContext(AppContext)
 
-    const [ filterQuery, { loading, error } ] = useLazyQuery(GET_CHARACTERS, {
+    const { data, error, loading } = useQuery(GET_CHARACTERS, {
         notifyOnNetworkStatusChange: true,
-        onCompleted: (data) => {
-            setCharacters(data?.characters ?? {})
-            setShowResultInfo(true)
+        variables: {
+            name: name.toLowerCase(),
+            status: status.toLowerCase(),
+            gender: gender.toLowerCase(),
+            val: 'apollo-link-de'
+        },
+        context: {
+            debounceKey: '2',
+            debounceTimeout: 800,
         }
     })
 
-    /* Get all characters before submitting request with filter */
-    useEffect(() => {
-        filterQuery({
-            variables: {
-                name: query,
-                status: status,
-                gender: gender
-            }
-        })
-    }, [])
-
     return (
         <React.Fragment>
-            <Filter
-                filterQuery={filterQuery}
-            />
+            <Filter />
             <div className={styles.contentWrapper}>
                 {   loading ?
                         <Loader />
@@ -49,11 +41,11 @@ const Home = () => {
                             :
                             <React.Fragment>
                                 <ResultInfo
-                                    totalResultCount={characters?.info?.count}
-                                    showResultInfo={showResultInfo}
+                                    totalResultCount={data?.characters?.info?.count}
+                                    isLoading={loading}
                                 />
                                 <LoadCharacters
-                                    characters={characters ?? {}}
+                                    characters={data?.characters ?? {}}
                                 />
                             </React.Fragment>
                         }
