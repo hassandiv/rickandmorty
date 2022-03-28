@@ -9,7 +9,8 @@ import styles from '../../styles/LoadMore.module.css'
 
 const LoadCharacters = ({ characters }) => {
 
-    const { name, status, gender } = useContext(AppContext)
+    const { query } = useContext(AppContext)
+    const { name, status, gender } = query
 
     const [charactersResults, setCharactersResults] = useState(characters?.results ?? [])
     const [pageInfo, setPageInfo] = useState(characters?.info ?? {})

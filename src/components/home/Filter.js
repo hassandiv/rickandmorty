@@ -5,19 +5,13 @@ import styles from '../../styles/Form.module.css'
 
 const Filter = () => {
 
-    const { name, setName, status, setStatus, gender, setGender } = useContext(AppContext)
+    const { query, setQuery } = useContext(AppContext)
     const [isOpen, setIsOpen] = useState(false)
 
-    const handleChange = e => {
-        setName(e.target.value)
-    }
+    const { name, status, gender } = query
 
-    const handleSelectedStatus = e => {
-        setStatus(e.target.value)
-    }
-
-    const handleSelectedGender = e => {
-        setGender(e.target.value)
+    const handleQuery = e => {
+        setQuery({...query, [e.target.name]: e.target.value})
     }
 
     const statusTypes = ["All", "Live", "Dead", "Unknown"]
@@ -29,11 +23,11 @@ const Filter = () => {
                 <Form.Group className={styles.formGroup} controlId="exampleForm.ControlInput1">
                     <Form.Control 
                         type="text"
-                        name="search"
+                        name="name"
                         placeholder="Search ..."
                         className={styles.searchInput}
                         value={name}
-                        onChange={handleChange}
+                        onChange={handleQuery}
                     />
                     <div className={styles.advancedFilter}>
                         <Button 
@@ -49,11 +43,12 @@ const Filter = () => {
                                 {statusTypes?.map((statusType, index) => 
                                     <Form.Check
                                         key={index}
+                                        name="status"
                                         type="radio"
                                         value={statusType !== "All" ? statusType : "" }
                                         label={statusType}
                                         checked={status === `${statusType !== "All" ? statusType : ""}`}
-                                        onChange={handleSelectedStatus}
+                                        onChange={handleQuery}
                                     />
                                 )}
                             </div>
@@ -62,11 +57,12 @@ const Filter = () => {
                                 {genderTypes?.map((genderType, index) => 
                                     <Form.Check
                                         key={index}
+                                        name="gender"
                                         type="radio"
                                         value={genderType !== "All" ? genderType : "" }
                                         label={genderType}
                                         checked={gender === `${genderType !== "All" ? genderType : ""}`}
-                                        onChange={handleSelectedGender}
+                                        onChange={handleQuery}
                                     />
                                 )}
                             </div>

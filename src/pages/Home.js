@@ -12,7 +12,8 @@ import styles from '../styles/Home.module.css'
 const Home = () => {
 
     /* Search filter by name AND OR status AND OR gender */
-    const { name, status, gender } = useContext(AppContext)
+    const { query } = useContext(AppContext)
+    const { name, status, gender } = query
 
     const { data, error, loading } = useQuery(GET_CHARACTERS, {
         notifyOnNetworkStatusChange: true,

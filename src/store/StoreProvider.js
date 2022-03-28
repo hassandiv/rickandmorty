@@ -5,9 +5,11 @@ export const AppContext = createContext()
 export const AppStore = ({ children }) => {
 
     /* Filter queries */
-    const [ name, setName ] = useState('')
-    const [ status, setStatus ] = useState('')
-    const [ gender, setGender ] = useState('')
+    const [ query, setQuery ] = useState({
+        name: '',
+        status: '',
+        gender: ''
+    })
 
     /* Add characters to fav list */
     const [ favourite, setFavourite ] = useState([])
@@ -16,12 +18,8 @@ export const AppStore = ({ children }) => {
     return (
         <AppContext.Provider
             value={{
-                name,
-                setName,
-                status,
-                setStatus,
-                gender, 
-                setGender,
+                query,
+                setQuery,
                 favourite,
                 setFavourite,
                 characterId,
