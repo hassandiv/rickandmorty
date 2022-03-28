@@ -30,4 +30,4 @@ const client = new ApolloClient({
     defaultOptions
 })
 
-export default client
+export default client 

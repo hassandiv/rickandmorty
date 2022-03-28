@@ -21,10 +21,9 @@ const Home = () => {
             name: name.toLowerCase(),
             status: status.toLowerCase(),
             gender: gender.toLowerCase(),
-            val: 'apollo-link-de'
         },
         context: {
-            debounceKey: '2',
+            debounceKey: '1',
             debounceTimeout: 800,
         }
     })
