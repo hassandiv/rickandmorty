@@ -1,26 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { AppContext } from '../store/StoreProvider'
+import React, { useContext, useState } from 'react'
+import { AppContext } from '../../store/StoreProvider'
 import { Form, Button } from 'react-bootstrap'
-import styles from '../styles/Form.module.css'
+import styles from '../../styles/Form.module.css'
 
 const Filter = ({ filterQuery }) => {
 
     const { query, setQuery, status, setStatus, gender, setGender } = useContext(AppContext)
     const [isOpen, setIsOpen] = useState(false)
-
-    let queryLowerCase = query.toLowerCase()
-    let statusLowerCase = status.toLowerCase()
-    let genderLowerCase = gender.toLowerCase()
-
-    useEffect(() => {
-        filterQuery({
-            variables: {
-                name: queryLowerCase,
-                status: statusLowerCase,
-                gender: genderLowerCase
-            }
-        })
-    }, [])
 
     const handleChange = e => {
         setQuery(e.target.value)
@@ -34,6 +20,11 @@ const Filter = ({ filterQuery }) => {
         setGender(e.target.value)
     }
 
+    let queryLowerCase = query.toLowerCase()
+    let statusLowerCase = status.toLowerCase()
+    let genderLowerCase = gender.toLowerCase()
+
+    /* Submit request with filter queries */
     const handleFormSubmit = e => {
         e.preventDefault()
         filterQuery({
@@ -113,4 +104,5 @@ const Filter = ({ filterQuery }) => {
         </div>
     )
 }
+
 export default Filter

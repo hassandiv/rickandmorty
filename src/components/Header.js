@@ -8,7 +8,7 @@ const Header = () => {
     const location = useLocation()
 
     return (
-        <header className={location.pathname === "/" && "fixed-top"}>
+        <header className={location.pathname === "/" ? "fixed-top" : ""}>
             <Navbar bg="dark" variant="dark">
                 <div className={styles.container}>
                     <Navbar.Brand className={styles.link}>
@@ -23,4 +23,5 @@ const Header = () => {
         </header>
     )
 }
+
 export default Header

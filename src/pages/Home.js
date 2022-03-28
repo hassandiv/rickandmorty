@@ -2,18 +2,19 @@ import React, { useState, useEffect, useContext } from 'react'
 import { AppContext } from '../store/StoreProvider'
 import { useLazyQuery } from '@apollo/client'
 import { GET_CHARACTERS } from '../gqlSchemas/queries/characters/getCharacters'
-import Filter from '../components/Filter'
+import Filter from '../components/home/Filter'
 import Loader from '../components/Loader'
 import Error from '../components/Error'
-import ResultInfo from '../components/ResultInfo'
+import ResultInfo from '../components/home/ResultInfo'
 import LoadCharacters from '../components/characters/LoadCharacters'
 import styles from '../styles/Home.module.css'
 
 const Home = () => {
 
-    //const { query, status, gender } = useContext(AppContext)
+    const { query, status, gender } = useContext(AppContext)
     const [ characters, setCharacters ] = useState({})
     const [ showResultInfo, setShowResultInfo ] = useState(false)
+
     const [ filterQuery, { loading, error } ] = useLazyQuery(GET_CHARACTERS, {
         notifyOnNetworkStatusChange: true,
         onCompleted: (data) => {
@@ -22,21 +23,16 @@ const Home = () => {
         }
     })
 
-    // let queryLowerCase = query.toLowerCase()
-    // let statusLowerCase = status.toLowerCase()
-    // let genderLowerCase = gender.toLowerCase()
-
-    //first call to display all characters our filter states are empty
-    //if filter is submitted and clicked on a character to view single character page, then going back to home page keep the same results
-    // useEffect(() => {
-    //     filterQuery({
-    //         variables: {
-    //             name: queryLowerCase,
-    //             status: statusLowerCase,
-    //             gender: genderLowerCase
-    //         }
-    //     })
-    // }, [])
+    /* Get all characters before submitting request with filter */
+    useEffect(() => {
+        filterQuery({
+            variables: {
+                name: query,
+                status: status,
+                gender: gender
+            }
+        })
+    }, [])
 
     return (
         <React.Fragment>

@@ -15,7 +15,7 @@ const CharacterView = () => {
 
     const { data, error, loading } = useQuery(GET_CHARACTER, {
         variables: {
-            id: Number(id) //e.g. 1 OR 2
+            id: Number(id) //e.g. 1 or 2
         }
     })
 
@@ -61,4 +61,5 @@ const CharacterView = () => {
         </section>
     )
 }
+
 export default CharacterView

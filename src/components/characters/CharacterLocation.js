@@ -10,4 +10,5 @@ const CharacterLocation = ({ location }) => {
         </div>
     )
 }
+
 export default CharacterLocation

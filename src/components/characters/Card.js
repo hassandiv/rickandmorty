@@ -1,14 +1,14 @@
 import React from "react"
-import { Link } from 'react-router-dom'
+import { useLocation, Link } from "react-router-dom"
 import CharacterLocation from './CharacterLocation'
 import CharacterEpisodes from "./CharacterEpisodes"
 import styles from '../../styles/Card.module.css'
 
-const Card = ({ character }) => {
+const Card = ({ character, handleRmv, handleChange }) => {
+
+    const location = useLocation()
 
     const checkStatus = character?.status === "Alive" ? styles.greenIcon : character?.status === "Dead" ? styles.redIcon : character?.status === "unknown" && styles.greyIcon
-
-    // console.log('character', character)
 
     return (
         <article className={styles.card} id={character?.id}>
@@ -26,6 +26,22 @@ const Card = ({ character }) => {
                         <span className={checkStatus}></span>
                         {character?.status} - {character?.species} - {character?.gender}
                     </span>
+                    {location.pathname === '/' ?
+                        <input
+                            type="checkbox"
+                            alt="favourite"
+                            className={`${character.checked ? styles.checkedIcon : styles.uncheckedIcon}` + ` ` + styles.iconPosition }
+                            onChange={() => handleChange()}
+                            checked={character.checked || false}
+                        />
+                        :
+                        <input
+                            type="checkbox"
+                            alt="favourite"
+                            className={`${styles.removeIcon}` + ` ` + styles.iconPosition}
+                            onClick={() => handleRmv(handleRmv)}
+                        />
+                    }
                 </div>
                 <CharacterLocation
                     location={character?.location}
@@ -37,4 +53,5 @@ const Card = ({ character }) => {
         </article>
     )
 }
+
 export default Card

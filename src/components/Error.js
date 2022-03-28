@@ -6,4 +6,5 @@ const Error = ({ error }) => {
         <p className="text-white text-center">Internal Server Error! {error?.message}</p> 
     )
 }
+
 export default Error

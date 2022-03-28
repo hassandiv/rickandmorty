@@ -10,4 +10,5 @@ const CharacterEpisodes = ({ episodes }) => {
         </div>
     )
 }
+
 export default CharacterEpisodes
