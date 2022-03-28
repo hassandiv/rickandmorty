@@ -18,16 +18,16 @@ function App() {
         <ApolloProvider client={client}>
             <AppStore>
                 <Router>
-                <Header/>
-                    <Layout>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/favourite" element={<Favourite />} />
-                            <Route path="/character/:id" element={<CharacterView />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </Layout>
-                <Footer/>
+                    <Header/>
+                        <Layout>
+                            <Routes>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/favourite" element={<Favourite />} />
+                                <Route path="/character/:id" element={<CharacterView />} />
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </Layout>
+                    <Footer/>
                 </Router>
             </AppStore>
         </ApolloProvider>
