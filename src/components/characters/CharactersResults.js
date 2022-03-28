@@ -27,7 +27,7 @@ const CharactersResults = ({ charactersResults }) => {
 				character.checked = true
 			}
 		})
-	}, [charactersResults])
+	}, [favourite])
 
     /* handle character checkbox - checked / unchecked */
 	const handleOnChange = character => {
@@ -71,7 +71,7 @@ const CharactersResults = ({ charactersResults }) => {
         setFavourite(copyFavCharacters)
 		setCharacterId('')
 
-		if (favourite?.length === 1) {
+		if (favourite?.length === 1) { //rmv last 1
 			setRmvLastItem(true)
 		}
 	}
@@ -81,7 +81,7 @@ const CharactersResults = ({ charactersResults }) => {
 		if (favourite?.length > 0) {
 			localStorage.setItem('favourite', JSON.stringify(favourite))
 		}
-		if (favourite?.length === 0 && rmvLastItem) {
+		if (favourite?.length === 0 && rmvLastItem) { //rmv last 1
 			const clearFav = favourite?.splice(0)
 			localStorage.setItem('favourite', JSON.stringify(clearFav))
 		}
